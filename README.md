@@ -71,6 +71,33 @@ pnpm start:dev
 
 API: `http://localhost:3000` (or your `PORT`). Versioned routes are under **`/api/v1`** (e.g. `/api/v1/users`, `/api/v1/health`).
 
+## Docker
+
+### Database only (local dev)
+
+```bash
+docker compose up postgres -d
+```
+
+Then run the app with `pnpm start:dev` and apply the schema from the host (`pnpm prisma:push` or `pnpm prisma:migrate`).
+
+### Full stack (app + Postgres)
+
+1. Start Postgres and apply the schema once from the host:
+
+```bash
+docker compose up postgres -d
+pnpm prisma:push
+```
+
+2. Build and start the app:
+
+```bash
+docker compose up -d --build
+```
+
+App: **http://localhost:3000**. The app connects to the DB using the `postgres` service hostname.
+
 ## Scripts
 
 | Command           | Description                    |
